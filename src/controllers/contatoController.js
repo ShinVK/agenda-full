@@ -51,3 +51,12 @@ exports.edit = async (req, res) => {
     return res.send('404');
   }
 }
+
+exports.delete = async(req, res) => {
+  if(!req.params.id) return res.render('404');
+  console.log(req.params.id);
+  const contato = await Contato.delete(req.params.id);
+  if(!contato) return res.render('404');
+  req.flash('success', 'Contato apagado com sucesso.')
+  req.session.save(() => res.redirect('/'));
+} 
